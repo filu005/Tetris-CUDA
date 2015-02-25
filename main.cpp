@@ -75,6 +75,9 @@ int main(int argc, char* argv[])
 	// Define the viewport dimensions
 	glViewport(0, 0, (GLsizei) (widthInBlocks * blockSize), (GLsizei) (heightInBlocks * blockSize));
 
+	static double start_time = glfwGetTime();
+	//int mul = 200;
+
 	// Game loop
 	while(!glfwWindowShouldClose(window))
 	{
@@ -95,8 +98,16 @@ int main(int argc, char* argv[])
 
 		if((numOfIterations != 0) && (game->iterations >= numOfIterations))
 			glfwSetWindowShouldClose(window, GL_TRUE);
+
+		//int iters = game->getPoints();
+		//if(iters != 0 && (iters % mul) == 0)
+		//{
+		//	std::cout << iters << "\t" << glfwGetTime() - start_time << std::endl;
+		//	mul = mul * 2;
+		//}
 	}
 
+	std::cout << game->getPoints() << "\t" << glfwGetTime() - start_time << std::endl;
 	delete game;
 	glfwTerminate();
 	//VLDReportLeaks();

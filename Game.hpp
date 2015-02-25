@@ -33,6 +33,7 @@ public:
 	void setLookAheadTetrominosNumbler(int num) { _lookAheadTetrominos = num; }
 	void setTetrominoDrawStyle(int num) { _tetrominoDrawStyle = (num <= 1) ? num : 1; }
 
+	int getPoints() const { return _points; }
 	int iterations;
 	double interval;
 

@@ -187,6 +187,13 @@ void kernel(InData* startAndEndXPositionPerRotation, size_t pitch_result, Result
 	const double holesWeight = -0.46544;
 	const double bumpinessWeight = -0.24077;
 
+	int rotation = blockIdx.x;
+	int startPosX = startAndEndXPositionPerRotation[rotation].startX;
+	int posX = threadIdx.x + startPosX;
+	//printf("blockIdx.x: %d\tthreadIdx.x: %d\tposX: %d\n", rotation, threadIdx.x, posX);
+	if(posX > startAndEndXPositionPerRotation[rotation].endX)
+		return;
+
 	Tetromino t(static_cast<Tetromino::Name>(tetrominoName));
 	Board b;
 	//-------- board set
@@ -205,13 +212,6 @@ void kernel(InData* startAndEndXPositionPerRotation, size_t pitch_result, Result
 	b.setWH(widthInBlocks, heightInBlocks);
 	//-------- board set
 
-	int rotation = blockIdx.x;
-	int startPosX = startAndEndXPositionPerRotation[rotation].startX;
-	int posX = threadIdx.x + startPosX;
-	//printf("blockIdx.x: %d\tthreadIdx.x: %d\tposX: %d\n", rotation, threadIdx.x, posX);
-	if(posX > startAndEndXPositionPerRotation[rotation].endX)
-		return;
-	
 	t.move(-t.x(), -t.y());//ustawiam tetromino na (0, 0)
 	t.move(posX, 0);
 
